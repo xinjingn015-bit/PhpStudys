@@ -12,7 +12,7 @@ echo "Japan Time<br>";
     #clock{
         font-size: 60px;
         text-align: center; 
-        color:rgb(99, 216, 118);
+        color:rgb(144, 99, 516);
     }
 </style>
     <title>今の時刻</title>
