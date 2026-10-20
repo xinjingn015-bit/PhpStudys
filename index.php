@@ -12,7 +12,6 @@ echo "Japan Time<br>";
     #clock{
         font-size: 60px;
         text-align: center; 
-        color:rgb(216, 146, 99);
     }
 </style>
     <title>今の時刻</title>
@@ -21,6 +20,29 @@ echo "Japan Time<br>";
     <div id="clock"></div>
 
    <script>
+function ChengColor(hslString){
+ // パターン: hsl(数字, 数字%, 数字%)
+    const regex = /^hsl\(\s*([\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*\)$/i;
+    const match = hslString.match(regex);
+
+    if (!match) {
+        throw new Error("Invalid HSL format: " + hslString);
+    }
+
+    // 数値に変換
+    const moto = {
+        h: parseFloat(match[1]), // Hue
+        s: parseFloat(match[2]), // Saturation
+        l: parseFloat(match[3])  // Lightness
+    };
+
+    return {
+        h: Math.abs((360 - moto.h)),
+        s: Math.abs(100 - moto.s), 
+        l: Math.abs(100 - moto.l), 
+    }
+}
+
 function updateClock(){
 
     const now = new Date();
@@ -74,11 +96,10 @@ function updateClock(){
             const l = 100 - qua * 3;
             const j = 100 - qua * 5;
 
-          color = `hsl(32, ${l}%, ${j}%)`;
+            color = `hsl(32, ${l}%, ${j}%)`;
         }
         else if(h < 20){
             const qua = ((h - 18) * 60 + m) / 12;
-
             const l = 70 + qua * 2;
             const j = 50 - qua * 4.3;
 
@@ -87,8 +108,9 @@ function updateClock(){
         else{
             color = "hsl(266, 90%, 7%)";
         }
-
+        
         document.body.style.backgroundColor = color;
+        document.body.style.color = ChengColor(color);
     }
 
     updateClock();
