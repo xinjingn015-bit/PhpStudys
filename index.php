@@ -5,9 +5,9 @@ echo "Japan Time<br>";
 ?>
 
 <!DOCTYPE html>
-<html lang = "ja>
+<html lang = "ja">
 <head>
-    <meta charaset="UTF-8">
+    <meta charset="UTF-8">
     <style>
     #clock{
         font-size: 60px;
@@ -36,11 +36,12 @@ function ChengColor(hslString){
         l: parseFloat(match[3])  // Lightness
     };
 
-    return {
+    const changeed =  {
         h: Math.abs((360 - moto.h)),
         s: Math.abs(100 - moto.s), 
         l: Math.abs(100 - moto.l), 
     }
+    return `hsl(${changeed.h}, ${changeed.s}%, ${changeed.l}%)`
 }
 
 function updateClock(){
