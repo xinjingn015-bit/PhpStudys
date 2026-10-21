@@ -10,7 +10,7 @@ echo "Japan Time<br>";
     <meta charset="UTF-8">
     <style>
     #clock{
-        font-size: 60px;
+        font-size: min(85vw,30vh); 
         text-align: center; 
     }
 </style>
@@ -37,10 +37,13 @@ function ChengColor(hslString){
     };
 
     const changeed =  {
-        h: Math.abs((360 - moto.h)),
+        h: Math.abs(( moto.h + 180) %360),
         s: Math.abs(100 - moto.s), 
         l: Math.abs(100 - moto.l), 
     }
+    //明度で文字の明るさ分け
+ 
+
     return `hsl(${changeed.h}, ${changeed.s}%, ${changeed.l}%)`
 }
 
@@ -49,7 +52,9 @@ function updateClock(){
     const now = new Date();
 
     const h = now.getHours();
+   // const h = 0;
     const m = now.getMinutes();
+   // const m = 0;
     const s = now.getSeconds();
 
     const disp_h = h.toString().padStart(2,"0");
@@ -112,6 +117,13 @@ function updateClock(){
         
         document.body.style.backgroundColor = color;
         document.body.style.color = ChengColor(color);
+        if(h < 5 || h >= 20 ){
+            document.body.style.textShadow = "1px 1px 4px rgba(203, 203, 216, 1)";
+        }
+        else{
+            document.body.style.textShadow = "1px 1px 3px rgba(43, 43, 43, 0.7)";
+
+        }
     }
 
     updateClock();
