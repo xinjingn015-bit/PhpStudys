@@ -10,8 +10,9 @@ echo "Japan Time<br>";
     <meta charset="UTF-8">
     <style>
     #clock{
-        font-size: min(85vw,30vh); 
-        text-align: center; 
+        font-size: min(20vw,30vh); 
+        text-align: center;
+        
     }
 </style>
     <title>今の時刻</title>
@@ -125,7 +126,7 @@ function updateClock(){
 
         }
     }
-
+    
     updateClock();
     setInterval(updateClock, 1000);
     </script>
