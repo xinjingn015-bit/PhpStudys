@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set("Asia/Tokyo");
-echo "Japan Time<br>";
+echo "Now Time<br>";
 
 ?>
 
@@ -14,12 +14,17 @@ echo "Japan Time<br>";
         text-align: center;
         
     }
+    p{
+        font-size: smaller;
+        background-color: hsla(0, 5%, 83%, 0.7);
+        color: rgb(20, 20, 0);
+    }
 </style>
     <title>今の時刻</title>
 </head>
 <body>
     <div id="clock"></div>
-
+    <p> 本体の時間によっては実際の時間とずれることがあります</p>
    <script>
 function ChengColor(hslString){
  // パターン: hsl(数字, 数字%, 数字%)
@@ -115,14 +120,13 @@ function updateClock(){
         else{
             color = "hsl(266, 90%, 7%)";
         }
-        
         document.body.style.backgroundColor = color;
         document.body.style.color = ChengColor(color);
         if(h < 5 || h >= 20 ){
-            document.body.style.textShadow = "1px 1px 4px rgba(203, 203, 216, 1)";
+            clock_e.style.textShadow = "1px 1px 4px rgba(203, 203, 216, 1)";
         }
         else{
-            document.body.style.textShadow = "1px 1px 3px rgba(43, 43, 43, 0.7)";
+            clock_e.style.textShadow = "1px 1px 3px rgba(43, 43, 43, 0.7)";
 
         }
     }
