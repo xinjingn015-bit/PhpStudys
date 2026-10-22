@@ -14,6 +14,44 @@ echo "Now Time<br>";
         text-align: center;
         
     }
+    .date{
+        font-size: min(7vw,10vh);
+        padding-left: 20px;
+        margin: 3px;
+    }
+    #calender{
+        margin: 15px;
+        padding: 15px;
+        background-color: hsla(0, 11%, 95%, 0.91);
+        color: rgb(0, 0, 0);
+        text-Shadow :"1px 0px 1px rgba(43, 43, 43, 0.7)";
+        text-align: center;
+    }
+    .today{
+        display:inline-block;
+
+        width: 32px;
+        height: 32px;
+
+        line-height: 32px;
+        text-align: center;
+
+        border-radius: 50%;
+        background-color: hsla(29, 76%, 68%, 0.70);
+    }
+    .mon{
+        font-size: 30px;
+    }
+    table{
+        margin: 0 auto;
+    }
+    td{
+        width: 100px;
+        height: 50px;
+        text-align: center;
+        vertical-align:middle;
+        background-color: hsla(0, 0%, 100%, 0.67);
+    }
     p{
         font-size: smaller;
         background-color: hsla(0, 5%, 83%, 0.7);
@@ -23,8 +61,24 @@ echo "Now Time<br>";
     <title>今の時刻</title>
 </head>
 <body>
+    <div class = "date"></div>
     <div id="clock"></div>
     <p> 本体の時間によっては実際の時間とずれることがあります</p>
+    <div id = "calender">
+        <div class = "mon"></div>
+        <table>
+        <tr>
+            <td>日</td>
+            <td>月</td>
+            <td>火</td>
+            <td>水</td>
+            <td>木</td>
+            <td>金</td>
+            <td>土</td>
+        </tr>
+        <tbody class = "days"></tbody>
+        </table>
+    </div>
    <script>
 function ChengColor(hslString){
  // パターン: hsl(数字, 数字%, 数字%)
@@ -53,9 +107,56 @@ function ChengColor(hslString){
     return `hsl(${changeed.h}, ${changeed.s}%, ${changeed.l}%)`
 }
 
+//カレンダーの作成
+function GetCalender(date){
+    const date_e = document.querySelector(".days");
+    const month_e = document.querySelector(".mon");
+    const m = date.getMonth();
+    const d = date.getDate();
+
+    month_e.textContent = (m+1).toString();
+
+    const first_d ={
+        mon:m+1,
+        day:1,
+        youbi: new Date(date.getFullYear(),m,1).getDay()
+    };
+    const last_d ={
+        mon:m+1,
+        day:new Date(date.getFullYear(),m+1,0).getDate(),
+        youbi: new Date(date.getFullYear(),m+1,0).getDay()
+    };
+
+    let context = "<tr>";
+    //繰り返して配置
+    let youbi = first_d.youbi;//曜日カウンタ
+    for(let i=0;i<first_d.youbi;i++){
+        context +=  `<td></td>`; 
+    }
+
+    for(let d = 1; d<=last_d.day;d++){
+        if(d == date.getDate()){
+            context += `<td><span class="today">${d}</span></td>`;
+        }
+        else{
+            context += `<td>${d}</td>`;
+        }
+        youbi++;
+        if(youbi >= 7){
+            youbi =0;
+            context += `</tr>`;
+        }
+    }
+    date_e.innerHTML = context;
+
+}
+
+
 function updateClock(){
 
     const now = new Date();
+
+    GetCalender(now);
 
     const h = now.getHours();
    // const h = 0;
@@ -63,13 +164,21 @@ function updateClock(){
    // const m = 0;
     const s = now.getSeconds();
 
-    const disp_h = h.toString().padStart(2,"0");
-    const disp_m = m.toString().padStart(2,"0");
-    const disp_s = s.toString().padStart(2,"0");
-
     const clock_e = document.getElementById("clock");
+    const date_e = document.querySelector(".date");
+    
+    //日時設定
+    {
+        const disp_h = h.toString().padStart(2,"0");
+        const disp_m = m.toString().padStart(2,"0");
+        const disp_s = s.toString().padStart(2,"0");
+        const disp_d = now.getDate().toString().padStart(2,"0");
+        const disp_y = now.getFullYear().toString();
+        const disp_mon = (now.getMonth() +1).toString().padStart(2,"0");
 
-    clock_e.textContent = `${disp_h}:${disp_m}:${disp_s}`;
+        date_e.textContent = `${disp_y}/${disp_mon}/${disp_d}`;
+        clock_e.textContent = `${disp_h}:${disp_m}:${disp_s}`;
+    }
 
     let color;
 
@@ -124,9 +233,12 @@ function updateClock(){
         document.body.style.color = ChengColor(color);
         if(h < 5 || h >= 20 ){
             clock_e.style.textShadow = "1px 1px 4px rgba(203, 203, 216, 1)";
+            date_e.style.textShadow = "1px 1px 2px rgba(203, 203, 216, 1)";
+           
         }
         else{
             clock_e.style.textShadow = "1px 1px 3px rgba(43, 43, 43, 0.7)";
+            date_e.style.textShadow = "1px 0px 1px rgba(43, 43, 43, 0.7)";
 
         }
     }
