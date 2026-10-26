@@ -44,6 +44,8 @@ echo "Now Time<br>";
     }
     table{
         margin: 0 auto;
+        color: rgb(0, 0, 0);
+        
     }
     td{
         width: 100px;
@@ -51,6 +53,7 @@ echo "Now Time<br>";
         text-align: center;
         vertical-align:middle;
         background-color: hsla(0, 0%, 100%, 0.67);
+        color: rgb(0, 0, 0);
     }
     p{
         font-size: smaller;
@@ -230,7 +233,8 @@ function updateClock(){
             color = "hsl(266, 90%, 7%)";
         }
         document.body.style.backgroundColor = color;
-        document.body.style.color = ChengColor(color);
+        clock_e.body.style.color = ChengColor(color);
+        date_e.body.style.color = ChengColor(color);
         if(h < 5 || h >= 20 ){
             clock_e.style.textShadow = "1px 1px 4px rgba(203, 203, 216, 1)";
             date_e.style.textShadow = "1px 1px 2px rgba(203, 203, 216, 1)";
